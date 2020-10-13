@@ -5,7 +5,11 @@ ApplicationWindow {
     width: 640
     height: 480
     visible: true
+<<<<<<< HEAD
     title: qsTr("Window")
+=======
+    title: qsTr("Scroll")
+>>>>>>> 821b20ce8155fdc68285e7726ddae4662ec246c0
 
     ScrollView {
         anchors.fill: parent
