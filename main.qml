@@ -7,6 +7,10 @@ ApplicationWindow {
     visible: true
     title: qsTr("Window")
 
+    Button {
+
+    }
+
     ScrollView {
         anchors.fill: parent
 
