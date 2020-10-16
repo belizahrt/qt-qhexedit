@@ -19,15 +19,29 @@ ApplicationWindow {
             width: parent.width
             model: 20
 
-            spacing: 5
+            property int col: -1
+            property int row: -1
 
             MouseArea {
                 anchors.fill: parent
 
+                preventStealing: true
+                hoverEnabled: true
+
                 onClicked: {
-                    console.log(        // 35+5 = width(height) + spacing
-                        Math.trunc((listView.contentY + mouseY)/(35+5)),
-                        Math.trunc((listView.contentX + mouseX)/(35+5)))
+                    console.log("clicked on", listView.col, listView.row)
+                }
+
+                onPositionChanged: {
+                    listView.col = Math.trunc((listView.contentY + mouseY)/20)
+                    listView.row = Math.trunc((listView.contentX + mouseX)/25)
+                }
+
+                onHoveredChanged: {
+                    if (!containsMouse) {
+                        listView.col = -1
+                        listView.row = -1
+                    }
                 }
             }
 
@@ -35,23 +49,26 @@ ApplicationWindow {
 
                 property int ext_id: index
 
-                spacing: 5
+                spacing: 0
 
                 Repeater {
-                     model: 5
+                     model: 8
 
-                     Button {
-                         text: "%1%2".arg(ext_id).arg(index)
+                     Rectangle {
+                         implicitHeight: 20
+                         implicitWidth: 25
 
-                         implicitHeight: 35
-                         implicitWidth: 35
-
-                         background: Rectangle {
-                            color: "steelblue"
+                         color: {
+                             if (listView.col == ext_id && listView.row == index)
+                                return "lightsteelblue"
+                             else
+                                return "transparent"
                          }
 
-                         onClicked: {
-                             console.log(text)
+                         Text {
+                             anchors.centerIn: parent
+
+                             text: "%1 %2".arg(ext_id).arg(index)
                          }
                      }
                 }
