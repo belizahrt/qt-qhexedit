@@ -12,57 +12,69 @@ ApplicationWindow {
 
     color: "lightgray"
 
-    ScrollView {
+    Flickable {
         anchors.fill: parent
+        contentWidth: hexEdit.contentWidth
+        contentHeight: hexEdit.contentHeight
+
+        ScrollBar.vertical: ScrollBar {
+            active: true
+            stepSize: 20
+        }
+
+        boundsBehavior: Flickable.StopAtBounds
 
         ListView {
-            id: listView
+            id: hexEdit
+
+            cacheBuffer: 1000
 
             width: parent.width
+            height: parent.height
             model: 100
 
             property int col: -1
             property int row: -1
 
-            MouseArea {
-                anchors.fill: parent
-
-                preventStealing: true
-                hoverEnabled: true
-
-                cursorShape: Qt.IBeamCursor
-
-                onPositionChanged: {
-                    listView.col = Math.trunc((listView.contentY + mouseY)/20)
-                    listView.row = Math.trunc((listView.contentX + mouseX)/25)
-                }
-
-                onHoveredChanged: {
-                    if (!containsMouse) {
-                        listView.col = -1
-                        listView.row = -1
-                    }
-                }
-
-                onPressed: {
-                    console.log("pressed on", listView.col, listView.row)
-                }
-
-                onReleased: {
-                    console.log("released on", listView.col, listView.row)
-                }
-            }
-
             delegate: HexComponents.HexRow {
                 byteCount: 4
                 groupCount: 4
 
-                spacing: 10
+                hexData: [17, 1, 35, 45, 25, 6, 64, 8, 255, 10, 131, 228, 13, 114, 175, 16]
 
-                hexData: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+                delegate: HexComponents.ByteItem {
+
+                }
             }
         }
     }
 }
 
+//MouseArea {
+//    anchors.fill: parent
 
+//    preventStealing: true
+//    hoverEnabled: true
+
+//    cursorShape: Qt.IBeamCursor
+
+//    onPositionChanged: {
+//        hexEdit.col = Math.trunc((hexEdit.contentY + mouseY)/20)
+//        hexEdit.row = Math.trunc((hexEdit.contentX + mouseX)/25)
+//    }
+
+//    onHoveredChanged: {
+//        if (!containsMouse) {
+//            hexEdit.col = -1
+//            hexEdit.row = -1
+//        }
+//    }
+
+//    onPressed: {
+//        console.log("pressed on", hexEdit.col, hexEdit.row)
+//    }
+
+//    onReleased: {
+//        console.log("released on", hexEdit.col, hexEdit.row)
+//    }
+//}

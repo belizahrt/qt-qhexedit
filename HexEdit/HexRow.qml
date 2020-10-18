@@ -9,31 +9,47 @@ RowLayout {
 
     property variant hexData: 0
 
+    property int row: index
+
+    property Component delegate
+
+    spacing: 0
+
     Repeater {
-        id: hexGroup
+        model: groupCount * byteCount
 
-        model: groupCount
+        Loader {
+            sourceComponent: delegate
 
-        RowLayout{
-            spacing: 0
-
-            property int groupIndex: index
-
-            Repeater {
-                model: byteCount
-
-                ByteItem {
-                    value: {
-                        var start = groupIndex * byteCount
-                        var end = start + byteCount
-
-                        return hexData.slice(start, end)[index]
-                    }
-
-                    //Math.floor(Math.random() * Math.floor(255))
-                }
+            property bool isLastInGroup: {
+                return (index != 0
+                     && index != (byteCount*groupCount-1)
+                     && (index+1) % byteCount == 0)
             }
+
+            property int offset: {
+                var rowOffset = row * (groupCount * byteCount)
+
+                return rowOffset + index
+            }
+
+            property int value: hexData[index]
         }
     }
 }
 
+//        ByteItem {
+////            offset: {
+////                var rowOffset = row * (groupCount * byteCount)
+
+////                return rowOffset + index
+////            }
+
+////            value: hexData[index]
+
+////            isLastInGroup: {
+////                return (index != 0
+////                     && index != (byteCount*groupCount-1)
+////                     && (index+1) % byteCount == 0)
+////            }
+//        }
