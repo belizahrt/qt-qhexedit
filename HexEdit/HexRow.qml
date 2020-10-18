@@ -37,19 +37,3 @@ RowLayout {
         }
     }
 }
-
-//        ByteItem {
-////            offset: {
-////                var rowOffset = row * (groupCount * byteCount)
-
-////                return rowOffset + index
-////            }
-
-////            value: hexData[index]
-
-////            isLastInGroup: {
-////                return (index != 0
-////                     && index != (byteCount*groupCount-1)
-////                     && (index+1) % byteCount == 0)
-////            }
-//        }

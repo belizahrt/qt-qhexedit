@@ -10,10 +10,19 @@ Row {
     property int byteHeight: 20
     property int groupSpacing: 5
 
-//    property int value: 0
-//    property int offset: -1
+    property string text: {
+        return value.toString(16).toUpperCase().padStart(2, '0');
+    }
 
-//    property bool isLastInGroup: false
+    property Component contentItem: Text {
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+
+        font.pixelSize: 12
+        font.family: "consolas"
+
+        text: byteItem.text
+    }
 
     Rectangle {
         implicitWidth: byteWidth
@@ -21,18 +30,9 @@ Row {
 
         color: "transparent"
 
-        Text {
+        Loader {
+            sourceComponent: contentItem
             anchors.fill: parent
-
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-
-            font.pixelSize: 12
-            font.family: "consolas"
-
-            text: {
-               return value.toString(16).toUpperCase().padStart(2, '0');
-            }
         }
     }
 

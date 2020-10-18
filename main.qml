@@ -40,9 +40,11 @@ ApplicationWindow {
                 byteCount: 4
                 groupCount: 4
 
-                hexData: [17, 1, 35, 45, 25, 6, 64, 8, 255, 10, 131, 228, 13, 114, 175, 16]
+                hexData: [17, 1, 35, 45, 25, 0, 64, 8, 255, 10, 131, 228, 28, 114, 175, 16]
 
                 delegate: HexComponents.ByteItem {
+                    id: byteItem
+
 
                 }
             }
